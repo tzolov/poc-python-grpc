@@ -2,7 +2,7 @@
 """Client and server classes corresponding to protobuf-defined services."""
 import grpc
 
-import message_service_pb2 as message__service__pb2
+import MessageService_pb2 as MessageService__pb2
 
 
 class MessagingServiceStub(object):
@@ -15,24 +15,24 @@ class MessagingServiceStub(object):
             channel: A grpc.Channel.
         """
         self.biStream = channel.stream_stream(
-                '/MessagingService/biStream',
-                request_serializer=message__service__pb2.Message.SerializeToString,
-                response_deserializer=message__service__pb2.Message.FromString,
+                '/org.springframework.cloud.function.grpc.MessagingService/biStream',
+                request_serializer=MessageService__pb2.GrpcMessage.SerializeToString,
+                response_deserializer=MessageService__pb2.GrpcMessage.FromString,
                 )
         self.clientStream = channel.stream_unary(
-                '/MessagingService/clientStream',
-                request_serializer=message__service__pb2.Message.SerializeToString,
-                response_deserializer=message__service__pb2.Message.FromString,
+                '/org.springframework.cloud.function.grpc.MessagingService/clientStream',
+                request_serializer=MessageService__pb2.GrpcMessage.SerializeToString,
+                response_deserializer=MessageService__pb2.GrpcMessage.FromString,
                 )
         self.serverStream = channel.unary_stream(
-                '/MessagingService/serverStream',
-                request_serializer=message__service__pb2.Message.SerializeToString,
-                response_deserializer=message__service__pb2.Message.FromString,
+                '/org.springframework.cloud.function.grpc.MessagingService/serverStream',
+                request_serializer=MessageService__pb2.GrpcMessage.SerializeToString,
+                response_deserializer=MessageService__pb2.GrpcMessage.FromString,
                 )
         self.requestReply = channel.unary_unary(
-                '/MessagingService/requestReply',
-                request_serializer=message__service__pb2.Message.SerializeToString,
-                response_deserializer=message__service__pb2.Message.FromString,
+                '/org.springframework.cloud.function.grpc.MessagingService/requestReply',
+                request_serializer=MessageService__pb2.GrpcMessage.SerializeToString,
+                response_deserializer=MessageService__pb2.GrpcMessage.FromString,
                 )
 
 
@@ -68,27 +68,27 @@ def add_MessagingServiceServicer_to_server(servicer, server):
     rpc_method_handlers = {
             'biStream': grpc.stream_stream_rpc_method_handler(
                     servicer.biStream,
-                    request_deserializer=message__service__pb2.Message.FromString,
-                    response_serializer=message__service__pb2.Message.SerializeToString,
+                    request_deserializer=MessageService__pb2.GrpcMessage.FromString,
+                    response_serializer=MessageService__pb2.GrpcMessage.SerializeToString,
             ),
             'clientStream': grpc.stream_unary_rpc_method_handler(
                     servicer.clientStream,
-                    request_deserializer=message__service__pb2.Message.FromString,
-                    response_serializer=message__service__pb2.Message.SerializeToString,
+                    request_deserializer=MessageService__pb2.GrpcMessage.FromString,
+                    response_serializer=MessageService__pb2.GrpcMessage.SerializeToString,
             ),
             'serverStream': grpc.unary_stream_rpc_method_handler(
                     servicer.serverStream,
-                    request_deserializer=message__service__pb2.Message.FromString,
-                    response_serializer=message__service__pb2.Message.SerializeToString,
+                    request_deserializer=MessageService__pb2.GrpcMessage.FromString,
+                    response_serializer=MessageService__pb2.GrpcMessage.SerializeToString,
             ),
             'requestReply': grpc.unary_unary_rpc_method_handler(
                     servicer.requestReply,
-                    request_deserializer=message__service__pb2.Message.FromString,
-                    response_serializer=message__service__pb2.Message.SerializeToString,
+                    request_deserializer=MessageService__pb2.GrpcMessage.FromString,
+                    response_serializer=MessageService__pb2.GrpcMessage.SerializeToString,
             ),
     }
     generic_handler = grpc.method_handlers_generic_handler(
-            'MessagingService', rpc_method_handlers)
+            'org.springframework.cloud.function.grpc.MessagingService', rpc_method_handlers)
     server.add_generic_rpc_handlers((generic_handler,))
 
 
@@ -107,9 +107,9 @@ class MessagingService(object):
             wait_for_ready=None,
             timeout=None,
             metadata=None):
-        return grpc.experimental.stream_stream(request_iterator, target, '/MessagingService/biStream',
-            message__service__pb2.Message.SerializeToString,
-            message__service__pb2.Message.FromString,
+        return grpc.experimental.stream_stream(request_iterator, target, '/org.springframework.cloud.function.grpc.MessagingService/biStream',
+            MessageService__pb2.GrpcMessage.SerializeToString,
+            MessageService__pb2.GrpcMessage.FromString,
             options, channel_credentials,
             insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
 
@@ -124,9 +124,9 @@ class MessagingService(object):
             wait_for_ready=None,
             timeout=None,
             metadata=None):
-        return grpc.experimental.stream_unary(request_iterator, target, '/MessagingService/clientStream',
-            message__service__pb2.Message.SerializeToString,
-            message__service__pb2.Message.FromString,
+        return grpc.experimental.stream_unary(request_iterator, target, '/org.springframework.cloud.function.grpc.MessagingService/clientStream',
+            MessageService__pb2.GrpcMessage.SerializeToString,
+            MessageService__pb2.GrpcMessage.FromString,
             options, channel_credentials,
             insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
 
@@ -141,9 +141,9 @@ class MessagingService(object):
             wait_for_ready=None,
             timeout=None,
             metadata=None):
-        return grpc.experimental.unary_stream(request, target, '/MessagingService/serverStream',
-            message__service__pb2.Message.SerializeToString,
-            message__service__pb2.Message.FromString,
+        return grpc.experimental.unary_stream(request, target, '/org.springframework.cloud.function.grpc.MessagingService/serverStream',
+            MessageService__pb2.GrpcMessage.SerializeToString,
+            MessageService__pb2.GrpcMessage.FromString,
             options, channel_credentials,
             insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
 
@@ -158,8 +158,8 @@ class MessagingService(object):
             wait_for_ready=None,
             timeout=None,
             metadata=None):
-        return grpc.experimental.unary_unary(request, target, '/MessagingService/requestReply',
-            message__service__pb2.Message.SerializeToString,
-            message__service__pb2.Message.FromString,
+        return grpc.experimental.unary_unary(request, target, '/org.springframework.cloud.function.grpc.MessagingService/requestReply',
+            MessageService__pb2.GrpcMessage.SerializeToString,
+            MessageService__pb2.GrpcMessage.FromString,
             options, channel_credentials,
             insecure, call_credentials, compression, wait_for_ready, timeout, metadata)

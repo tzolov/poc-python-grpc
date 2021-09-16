@@ -3,19 +3,20 @@ import logging
 
 import grpc
 
-import message_service_pb2
-import message_service_pb2_grpc
+import MessageService_pb2
+import MessageService_pb2_grpc
 
 
-class MessageService(message_service_pb2_grpc.MessagingServiceServicer):
+class MessageService(MessageService_pb2_grpc.MessagingServiceServicer):
     def requestReply(self, request, context):
-        print('Server received: %s' % request.payload.decode())
-        return message_service_pb2.Message(payload=str.encode(request.payload.decode().upper()))
+        print("Server received Payload: %s and Headers: %s" % (request.payload.decode(), request.headers))
+        return MessageService_pb2.GrpcMessage(
+            payload=str.encode(request.payload.decode().upper()), headers=request.headers)
 
 
 def serve():
     server = grpc.server(futures.ThreadPoolExecutor(max_workers=10))
-    message_service_pb2_grpc.add_MessagingServiceServicer_to_server(MessageService(), server)
+    MessageService_pb2_grpc.add_MessagingServiceServicer_to_server(MessageService(), server)
     server.add_insecure_port('[::]:50051')
     server.start()
     server.wait_for_termination()

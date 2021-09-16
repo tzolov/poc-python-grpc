@@ -1,11 +1,11 @@
 
 ### Generate proto stubs
 
-* Generate the stubs for `protos/message-service.proto`. From within the root project folder run: 
+* Generate the stubs for `protos/MessageService.proto`. From within the root project folder run: 
 ```
-python -m grpc_tools.protoc -I./protos/ --python_out=. --grpc_python_out=. message-service.proto
+python -m grpc_tools.protoc -I./protos/ --python_out=. --grpc_python_out=. MessageService.proto
 ```
-If successful it will generate the `message_service_pb2.py` and `message_service_pb2_grpc.py`. 
+If successful it will generate the `MessageService_pb2.py` and `MessageService_pb2_grpc.py`. 
 
 ### Build container image
 

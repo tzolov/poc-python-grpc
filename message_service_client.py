@@ -4,17 +4,24 @@ import sys
 
 import grpc
 
-import message_service_pb2
-import message_service_pb2_grpc
+import MessageService_pb2
+import MessageService_pb2_grpc
 
 
-def run(send_message):
+def run(input_text):
     with grpc.insecure_channel('localhost:50051') as channel:
-        stub = message_service_pb2_grpc.MessagingServiceStub(channel)
-        response = stub.requestReply(message_service_pb2.Message(payload=str.encode(send_message)))
-    print("Client received: " + response.payload.decode())
+        stub = MessageService_pb2_grpc.MessagingServiceStub(channel)
+        message_to_send = MessageService_pb2.GrpcMessage(payload=str.encode(input_text))
+        message_to_send.headers["Hi"] = "Oleg"
+        response = stub.requestReply(message_to_send)
+
+    print("Client received Payload: %s and Headers: %s" % (response.payload.decode(), response.headers))
 
 
 if __name__ == '__main__':
     logging.basicConfig()
-    run(sys.argv[1])
+    if len(sys.argv) > 1:
+        msg = sys.argv[1]
+    else:
+        msg = 'default test message'
+    run(msg)
